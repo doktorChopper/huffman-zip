@@ -10,7 +10,7 @@ static const unsigned int default_bitset_capacity = DEFAULT_CAPACITY;
 bitset_t* new_bitset() {
     bitset_t* bs = (bitset_t*) malloc(sizeof(bitset_t));
 
-    bs->bits = (uint64_t*) malloc(default_bitset_capacity * sizeof(uint64_t));
+    bs->bits = (uint8_t*) malloc(default_bitset_capacity * sizeof(uint8_t));
     bs->capacity = default_bitset_capacity;
     bs->size = 0;
 
