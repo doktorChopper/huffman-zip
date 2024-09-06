@@ -7,6 +7,7 @@ typedef unsigned long (*hash_func) (char);
 
 typedef struct entry {
     char key;    
+    unsigned int count;
     unsigned long hash;
 } entry_t;
 

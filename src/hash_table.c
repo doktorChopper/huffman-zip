@@ -34,13 +34,22 @@ bool new_hash_table_n(hash_table_t * table, unsigned long size, hash_func hash_f
 
 void insert_hash_table(hash_table_t * table, char key) {
     unsigned long index;
+    unsigned int hash;
 
-    entry_t* ent = (entry_t*) malloc(sizeof(entry_t));
-    ent->key = key;
-    ent->hash = table->hash_fn(key);
-    index = ent->hash % default_hash_table_size;
+    hash = table->hash_fn(key);
+    index = hash % default_hash_table_size;
 
-    table->table[ent->hash] = ent;
+    if(table->table[index] != NULL)
+        table->table[index]->count++;
+    else {
+        entry_t* ent = (entry_t*) malloc(sizeof(entry_t));
+        ent->key = key;
+        ent->hash = hash;
+        ent->count = 1;
+
+        table->table[index] = ent;
+    }
+
     table->count++;
 }
 
