@@ -2,23 +2,16 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define DEFAULT_SIZE 256
+#define HASH_TABLE_CAPACITY 256
 
-static unsigned long default_hash_table_size = DEFAULT_SIZE;
-
-static unsigned long default_hash_func(char);
-
-static unsigned long default_hash_func(char key) {
-    return key % default_hash_table_size;
-}
+static unsigned long hash_table_capacity = HASH_TABLE_CAPACITY;
 
 
 bool new_hash_table(hash_table_t * table) {
-    return new_hash_table_n(table, default_hash_table_size, default_hash_func);
-}
 
-bool new_hash_table_n(hash_table_t * table, unsigned long size, hash_func hash_fn) {
-    unsigned long alloc = size * sizeof(hash_table_t);
+    unsigned int alloc;
+
+    alloc = hash_table_capacity * sizeof(entry_t);
 
     table->table = (entry_t**) malloc(alloc);
     if(table->table == NULL)
@@ -26,40 +19,30 @@ bool new_hash_table_n(hash_table_t * table, unsigned long size, hash_func hash_f
 
     memset(table->table, 0, alloc);
 
-    table->size = size;
-    table->count = 0;
-    table->hash_fn = hash_fn;
+    table->size = 0;
+    table->capacity = hash_table_capacity;
+
     return true;
 }
 
-void insert_hash_table(hash_table_t * table, char key) {
-    unsigned long index;
-    unsigned int hash;
 
-    hash = table->hash_fn(key);
-    index = hash % default_hash_table_size;
+void free_hash_table(hash_table_t * table) {
+    for(unsigned int i = 0; i < table->capacity; ++i)
+        if(table->table[i])
+            free(table->table[i]);
+}
 
-    if(table->table[index] != NULL)
+void insert_hash_table(char key, hash_table_t * table) {
+
+    unsigned int index;
+    index = key % hash_table_capacity;
+
+    if(table->table[index])
         table->table[index]->count++;
     else {
         entry_t* ent = (entry_t*) malloc(sizeof(entry_t));
-        ent->key = key;
-        ent->hash = hash;
         ent->count = 1;
-
+        ent->key = key;
         table->table[index] = ent;
     }
-
-    table->count++;
 }
-
-void free_hash_table(hash_table_t * table) {
-    
-    for(unsigned int i = 0; i < table->size; ++i)
-        if(table->table[i] != NULL)
-            free(table->table[i]);
-
-    free(table->table);
-}
-
-
