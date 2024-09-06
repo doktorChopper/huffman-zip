@@ -94,3 +94,11 @@ unsigned int min_heap_extract(min_heap_t * minheap) {
     sift_down(0, minheap);
     return ret;
 }
+
+void build_min_heap_O_nlogn(min_heap_t * minheap, unsigned int * arr, unsigned int arr_size) {
+
+    new_min_heap(minheap);
+
+    for(unsigned int i = 0; i < arr_size; ++i)
+        min_heap_add(arr[i], minheap);
+}

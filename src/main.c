@@ -1,16 +1,10 @@
-#include "../include/hash_table.h"
+#include "../include/huffman.h"
+#include <stdio.h>
 
 int main() {
-    hash_table_t ht;
 
-    new_hash_table(&ht);
+    FILE* fp = fopen("./test.txt", "r");
+    build_huffman_codetable(fp);
 
-    insert_hash_table(&ht, 'f');
-    insert_hash_table(&ht, 'j');
-    insert_hash_table(&ht, 't');
-    insert_hash_table(&ht, 'd');
-    insert_hash_table(&ht, 'v');
-    insert_hash_table(&ht, 'n');
-
-    free_hash_table(&ht);
+    fclose(fp);
 }

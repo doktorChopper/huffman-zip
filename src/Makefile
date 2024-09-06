@@ -1,10 +1,14 @@
 CC = gcc
 EXE = demo
+RM = rm -r
+SRCS = ./huffman.c \
+	   ./hash_table.c \
+	   ./main.c \
 
 all: $(EXE)
 
-$(EXE): ./hash_table.c ./main.c
+$(EXE): $(SRCS)
 	$(CC) -g3 -o $@ $^
 
 clean:
-	rm -r $(EXE)
+	$(RM) $(EXE)
