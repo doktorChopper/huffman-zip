@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define MIN_HEAP_CAPACITY 11
+#define MIN_HEAP_CAPACITY 256
 
 static unsigned int min_heap_capacity = MIN_HEAP_CAPACITY;
 
@@ -85,6 +85,8 @@ bool new_min_heap(min_heap_t * minheap) {
 }
 
 void free_min_heap(min_heap_t * minheap) {
+    for(unsigned int i = 0; i < minheap->size; ++i)
+        free(minheap->array[i]);
     free(minheap->array);
 }
 

@@ -25,11 +25,19 @@ bool new_hash_table(hash_table_t * table) {
     return true;
 }
 
+entry_t* new_entry(char key, unsigned int count) {
+    entry_t* ret = (entry_t*) malloc(sizeof(entry_t));
+    ret->key = key;
+    ret->count = count;
+
+    return ret;
+}
 
 void free_hash_table(hash_table_t * table) {
     for(unsigned int i = 0; i < table->capacity; ++i)
         if(table->table[i])
             free(table->table[i]);
+    free(table->table);
 }
 
 void insert_hash_table(char key, hash_table_t * table) {
@@ -40,9 +48,8 @@ void insert_hash_table(char key, hash_table_t * table) {
     if(table->table[index])
         table->table[index]->count++;
     else {
-        entry_t* ent = (entry_t*) malloc(sizeof(entry_t));
-        ent->count = 1;
-        ent->key = key;
-        table->table[index] = ent;
+        table->table[index] = new_entry(key, 1);
+
+        ++table->size;
     }
 }

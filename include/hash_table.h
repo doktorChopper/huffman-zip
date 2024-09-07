@@ -8,6 +8,8 @@ typedef struct entry {
     unsigned int count;
 } entry_t;
 
+entry_t* new_entry(char, unsigned int);
+
 typedef struct {
     entry_t** table;
     unsigned int size;
