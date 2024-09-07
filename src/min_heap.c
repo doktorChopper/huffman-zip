@@ -64,6 +64,7 @@ min_heap_node_t* new_min_heap_node(char key, unsigned int freq) {
     ret->key = key;
     ret->left = NULL;
     ret->right = NULL;
+    ret->parent = NULL;
 
     return ret;
 }

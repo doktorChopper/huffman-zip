@@ -3,7 +3,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 
-#define DEFAULT_CAPACITY 16
+#define DEFAULT_CAPACITY 256
 
 static const unsigned int default_bitset_capacity = DEFAULT_CAPACITY;
 

@@ -6,6 +6,7 @@
 typedef struct min_heap_node {
     struct min_heap_node* left;
     struct min_heap_node* right;
+    struct min_heap_node* parent;
     unsigned int freq;
     char key;
 } min_heap_node_t;
